@@ -16,12 +16,13 @@ import com.minji.mydiary.R;
 import com.minji.mydiary.presenter.UploadPresenter;
 import com.minji.mydiary.presenter.UploadPresenterImpl;
 
+import java.io.File;
 import java.io.IOException;
 
 public class UploadActivity extends AppCompatActivity implements UploadView {
 
     private static final String TAG = "UploadActivity";
-    private final int GALLERY_CODE = 1112;
+    private static final int GALLERY_CODE = 1112;
     private UploadPresenter presenter = new UploadPresenterImpl(this);
     private ImageView uploadedImgView;
 
@@ -31,55 +32,40 @@ public class UploadActivity extends AppCompatActivity implements UploadView {
         setContentView(R.layout.activity_upload);
 
         presenter.requestOpenGallery(this);
-
         uploadedImgView = findViewById(R.id.uploaded_image);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "onActivityResult()");
+       if(requestCode == GALLERY_CODE) {
+           Log.d(TAG, "onActivityResult");
+           Uri photoUri = data.getData();
+           Cursor cursor = null;
+           File file = null;
 
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case GALLERY_CODE:
-                    presenter.setPhoto(data);
-                    break;
+           try {
+               String[] proj = { MediaStore.Images.Media.DATA };
+               cursor = getContentResolver().query(photoUri, proj, null, null, null);
 
-            }
-        }
+               int colIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+               cursor.moveToFirst();
+               file = new File(cursor.getString(colIndex));
+
+           } finally {
+               if(cursor != null) {
+                   cursor.close();
+               }
+           }
+
+           setPhoto(file);
+       }
     }
 
     @Override
-    public void setPhoto(Intent intent) {
-        Log.d(TAG, "setPhoto()");
-        Uri imgUri = intent.getData();
+    public void setPhoto(File file) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        Bitmap originBitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
 
-        String imagePath = getRealPathFromURI(imgUri);
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-        uploadedImgView.setImageBitmap(bitmap);
-    }
-
-    private int exifOrientationToDegrees(int exifOrientation) {
-        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
-            return 90;
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
-            return 180;
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
-            return 270;
-        }
-        return 0;
-    }
-
-    private String getRealPathFromURI(Uri contentUri) {
-        int colIndex = 0;
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-
-        if(cursor.moveToFirst()) {
-            colIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        }
-
-        return cursor.getString(colIndex);
+        uploadedImgView.setImageBitmap(originBitmap);
     }
 }

@@ -1,7 +1,7 @@
 package com.minji.mydiary.view;
 
-import android.content.Intent;
+import java.io.File;
 
 public interface UploadView {
-    void setPhoto(Intent intent);
+    void setPhoto(File file);
 }

@@ -7,6 +7,8 @@ import com.minji.mydiary.model.GalleryHelper;
 import com.minji.mydiary.model.GalleryHelperImpl;
 import com.minji.mydiary.view.UploadView;
 
+import java.io.File;
+
 public class UploadPresenterImpl implements UploadPresenter {
     private GalleryHelper galleryHelper = new GalleryHelperImpl();
     private UploadView view;
@@ -21,7 +23,7 @@ public class UploadPresenterImpl implements UploadPresenter {
     }
 
     @Override
-    public void setPhoto(Intent intent) {
-        view.setPhoto(intent);
+    public void setPhoto(File file) {
+        view.setPhoto(file);
     }
 }
