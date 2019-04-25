@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.minji.mydiary.R;
 import com.minji.mydiary.presenter.MainPresenter;
 import com.minji.mydiary.presenter.MainPresenterImpl;
+import com.minji.mydiary.utils.ContextHolder;
 
 public class MainActivity extends AppCompatActivity implements MainView {
     private Button uploadButton;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ContextHolder.setApplicationContext(getApplicationContext());
 
         uploadButton = findViewById(R.id.upload_button);
         uploadButton.setOnClickListener(new View.OnClickListener() {
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkPermissions();
         }
+
+        presenter.requestAllDatas();
     }
 
     private void checkPermissions() {

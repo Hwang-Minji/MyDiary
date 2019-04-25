@@ -8,4 +8,5 @@ import java.io.File;
 public interface UploadPresenter {
     void requestOpenGallery(Activity activity);
     void setPhoto(File file);
+    void requestUploadNewPost();
 }
