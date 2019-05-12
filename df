@@ -1,0 +1,29 @@
+[33mcommit dd4dfd255888d02023136cebb07cf8b2168589ca[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Minji Hwang <jjparson93@gmail.com>
+Date:   Sat May 11 22:57:38 2019 +0900
+
+    Update All Datas
+
+[33mcommit 8be5ee4e10ca8965511a7304a9095ab566599319[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Minji Hwang <jjparson93@gmail.com>
+Date:   Thu Apr 25 18:37:06 2019 +0900
+
+    Impl test cases
+
+[33mcommit 60be084f6769ef5b0cdc9aace83d7303326a4445[m
+Author: Minji Hwang <jjparson93@gmail.com>
+Date:   Tue Apr 23 11:51:48 2019 +0900
+
+    Update function that access gallery and upload photo in UploadedActivity
+
+[33mcommit 8f279af5994bde4e6a77ed25f79ccaf15b754181[m
+Author: Minji Hwang <jjparson93@gmail.com>
+Date:   Sat Apr 20 20:08:54 2019 +0900
+
+    Initial Commit
+
+[33mcommit 2937d4b345349368f9a8faff754ba57dc48b28ec[m
+Author: Hwang-Minji <39736341+Hwang-Minji@users.noreply.github.com>
+Date:   Sat Apr 20 20:07:14 2019 +0900
+
+    Initial commit

@@ -40,7 +40,7 @@ public class OpenPostActivity extends AppCompatActivity implements OpenPostView{
 
     private void setDate(String date) {
         Log.d(TAG, "date: " + date);
-        dateTextView.setText(date.substring(0,9));
+        dateTextView.setText(date.substring(0,10));
     }
 
     private void setImage(String imagePath) {

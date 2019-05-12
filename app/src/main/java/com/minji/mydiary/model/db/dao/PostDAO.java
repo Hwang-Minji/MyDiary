@@ -3,19 +3,23 @@ package com.minji.mydiary.model.db.dao;
 import android.os.Parcel;
 
 import org.parceler.ParcelConstructor;
+import org.parceler.ParcelPropertyConverter;
 
 import io.realm.PostDAORealmProxy;
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-@org.parceler.Parcel(implementations = {PostDAORealmProxy.class},
-                    value = org.parceler.Parcel.Serialization.FIELD,
-                    analyze = {PostDAO.class})
+@org.parceler.Parcel (implementations = { PostDAORealmProxy.class },
+                    value = org.parceler.Parcel.Serialization.BEAN,
+                    analyze = { PostDAO.class })
 public class PostDAO extends RealmObject {
     private String text;
     private String imagePath;
     @PrimaryKey
     private String date;
+    @ParcelPropertyConverter(RealmListParcelConverter.class)
+    private RealmList<PostDAO> posts;
 
     public PostDAO() {}
 
@@ -30,7 +34,6 @@ public class PostDAO extends RealmObject {
         date = in.readString();
         imagePath = in.readString();
         text = in.readString();
-
     }
 
     public void setDate(String date) { this.date = date; }
@@ -40,6 +43,10 @@ public class PostDAO extends RealmObject {
     public String getDate() { return date; }
     public String getText() { return text; }
     public String getImagePath() { return imagePath; }
+
+    public RealmList<PostDAO> getPosts() {
+        return posts;
+    }
 
     public static class Builder {
         private String date;
